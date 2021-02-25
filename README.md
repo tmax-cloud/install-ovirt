@@ -68,7 +68,7 @@
 	```
     * 임의 directory에 권한을 부여한다. 
         ```bash
-	$ chmod 777 ${TEMP_DIR}
+	    $ chmod 777 ${TEMP_DIR}
         ```
 ## Install Steps
 0. [패키지 설치](https://github.com/tmax-cloud/ovirt-install-guide/tree/master/K8S_Master#step0-%ED%99%98%EA%B2%BD-%EC%84%A4%EC%A0%95)
