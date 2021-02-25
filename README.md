@@ -163,17 +163,19 @@
 		Stage: Setup validation
 		Please provide the hostname of this host on the management network [ovirt1.test.dom]: `Enter`
         ```
-    * shared storage에 연결정보를 설정 및 연결 한다.
-	```bash
-	Please provide the hostname of this host on the management network [ovirt1.test.dom]: `Enter`
-        Please specify the storage you would like to use (glusterfs, iscsi, fc, nfs, posixfs)[nfs]: `posixfs`
-        Please specify the vfs type you would like to use (ext4, ceph, nfs)[ceph]: `ceph`
-        Please specify the full shared storage connection path to use (example: host:/path): `${CEPH_MOUNT_PATH}`    <-- ex)172.21.3.8:6789:/volumes/_nogroup/tim3/17a08a7a-1f51-43b0-b399-2bca4bffe5ac
-          If needed, specify additional mount options for the connection to the hosted-engine storagedomain (example: rsize=32768,wsize=32768) []:  `${CEPH_MOUNT_OPTION}` <-- ex) name=admin,secret=AQCeBcZftAEvExAAultsKBpNpiWWGi06Md7mmw==
+    
+    * shared storage에 연결정보를 설정 및 연결 한다.    
+	```yaml
+		Please provide the hostname of this host on the management network [ovirt1.test.dom]: `Enter`
+        	Please specify the storage you would like to use (glusterfs, iscsi, fc, nfs, posixfs)[nfs]: `posixfs`
+        	Please specify the vfs type you would like to use (ext4, ceph, nfs)[ceph]: `ceph`
+        	Please specify the full shared storage connection path to use (example: host:/path): `${CEPH_MOUNT_PATH}`    <-- ex)172.21.3.8:6789:/volumes/_nogroup/tim3/17a08a7a-1f51-43b0-b399-2bca4bffe5ac
+          	If needed, specify additional mount options for the connection to the hosted-engine storagedomain (example: rsize=32768,wsize=32768) []:  `${CEPH_MOUNT_OPTION}` <-- ex) name=admin,secret=AQCeBcZftAEvExAAultsKBpNpiWWGi06Md7mmw==
 	```
+	
     *  공유할 volume을 구성하고 설치완료된 local storage의 데이터를 이동시킨다.	
-        ```bash
-	Please specify the size of the VM disk in GiB: [101]: 120 `${SHARED_DISK_SIZE_FOR_VM}`
+        ```yaml
+		Please specify the size of the VM disk in GiB: [101]: 120 `${SHARED_DISK_SIZE_FOR_VM}`
 	```
 * 확인 
     * Admin node에서 engine vm 상태 확인
