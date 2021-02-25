@@ -213,20 +213,26 @@
         ```bash
 	    $ systemctl enable --now libvirtd cockpit.socket
 	```
+	
     * Access to oVirt Admin Portal, and Click [Compute] - [Hosts] on the left pane.
         *  https://${ENGINE_NODE_DNS}/ovirt-engine 
         *  login
             * id: admin
             * passwd: `${ENGINE_ADMIN_PAGE_PASSWD}`
+            
     * Click [New] button on the top of right pane.
+      
     * Input information of Node you'd like to add. Required items are Name/HostName of target Node and authentication method
         * /etc/hosts 기준 DNS를 HostName/IP로 설정 
         ```markdown
             * HostName/IP: ${NODE_DNS}
             * ex) ovirt2.test.com
         ```
+	
     * Configure [Power Management]. Click [OK] to proceed without configuring it
+    
     * After adding a new Compute Node, required tasks are run, so [Status] turns to [Installing].
+    
     * After successfully finishing configuration tasks, [Status] turns to [Up], That's OK to add a new Compute Node.
 
 * 확인:
