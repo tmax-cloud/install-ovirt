@@ -6,7 +6,21 @@
 * Prolinux 8
 * oVirt 4.4
 * ceph-common.x86_64 2:15.2.5-1.el8
-*  
+
+## 환경구성
+```
++-----------------------+          |          +-----------------------+
+|   [   Admin Node   ]  | 10.0.0.1 | 10.0.0.5 | [    oVirt Engine   ] |
+|    ovirt1.test.dom    +----------+----------+     master.test.dom   |
+|                       |          |          |                       |
++-----------------------+          |          +-----------------------+
+                                   |
++-----------------------+          |
+| [   Shared Storage  ] |10.0.0.6  |
+|     ceph.test.dom     +----------+
+|                       |
++-----------------------+
+```
 ## Prerequisites
 
 1. oVirt 패키지와 ceph 패키지 다운로드를 위해 oVirt repository를 등록한다
@@ -28,6 +42,7 @@
     ``` bash
     $ yum repolist
     ```    
+    
 2.  domain 구성을 위해 admin node와 engine node의 dns및 hostname을 등록한다.
     * /etc/hosts파일에 추가
         * DNS는 HOSTNAME과 DOMAIN을 합친 형태로 구성        
@@ -43,14 +58,10 @@
     172.21.7.10 ovirt2.test.dom ovirt2   # another node
     172.21.7.11 ovirt3.test.dom ovirt3   # another node
     172.21.7.17 master.test.dom master   # engine node on VM
-    ```
-    
-3.  oVirt-hosted-engine, ceph-common 패키지를 설치한다 
-    ```bash
-    $ yum install -y ovirt-hosted-engine-setup
-    $ yum install -y ceph-common
     ```  
-4. admin node에 
+    
+3.  cephs filesystem를 shared storage로 사용하기 위해 shared storage에서 ceph filesystem을 요청한다. 
+    
 
 
 ## Install Steps
@@ -59,57 +70,34 @@
 2. [oVirt ha 구성](https://github.com/tmax-cloud/ovirt-install-guide/tree/master/K8S_Master#step-2-kubeadm-kubelet-kubectl-%EC%84%A4%EC%B9%98)
 
 
-## Step0. 환경 설정
-* 목적 : `k8s 설치 진행을 위한 os 환경 설정`
+## Step0. 패키지 설치
+* 목적 : `hosted-engine, ceph설치를 위한 패키지 설치`
 * 순서 : 
-    * os hostname을 설정한다.
+    * hosted-engine 패키지 설치
 	```bash
-	hostnamectl set-hostname k8s-master
+	$ yum install -y ovirt-hosted-engine-setup
 	```
-    * /etc/hosts에 hostname과 ip를 등록한다. 
+    * ceph-common 설치
 	```bash
-	127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
-	::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+	$ yum install -y ceph-common
+	```  
 
-	172.22.5.2 k8s-master
-	```
-    * 방화벽(firewall)을 해제한다. 
-	```bash
-	systemctl stop firewalld
-	systemctl disable firewalld
-	```	
-    * 스왑 메모리를 비활성화 한다. 
-	```bash
-	swapoff -a
-	```
-    * 스왑 메모리 비활성화 영구설정
-      * vi /etc/fstap 
-	```bash
-	swap 관련 부분 주석처리
-	# /dev/mapper/centos-swap swap                    swap    defaults        0
-	```
-    ![image](figure/fstab.PNG)
-    * SELinux 설정을 해제한다. 
-	```bash
-	setenforce 0
-	sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
-	```
-
-## Step 1. cri-o 설치
-* 목적 : `k8s container runtime 설치`
+## Step 1. oVirt engine 설치
+* 목적 : `oVirt domain을 제어할 engine을 vm위에 배포한다.`
+* 실행 : 
+    ```bash
+    $ hosted-engine --deploy
+    ```
 * 순서 :
-    * cri-o를 설치한다.
-	```bash
-	sudo yum -y install cri-o
-	systemctl enable crio
-	systemctl start crio
-	```
-    * cri-o 설치를 확인한다.
+    * local storage에 vm을 기동하여 engine을 설치한다. 
+	
+    * shared storage에 연결하여 vm이 공유할 volume을 구성한다. 
 	```bash
 	systemctl status crio
 	rpm -qi cri-o
 	```
-    ![image](figure/crio.PNG)
+    * 구성 된 volume에 설치완료된 local storage의 데이터를 이동시킨다.	
+    
 * 비고 :
     * 추후 설치예정인 network plugin과 crio의 가상 인터페이스 충돌을 막기위해 cri-o의 default 인터페이스 설정을 제거한다.
 	```bash
