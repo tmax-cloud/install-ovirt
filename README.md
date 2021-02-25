@@ -63,13 +63,13 @@
 3.  cephfs를 ovirt storage domain으로 사용하기 위한 설정 
     * ceph 로부터 생성된 cephfs 연결 PATH및 mount option 정보를 기반으로 한다.
     * admin node에서 임의의 directory에 mount한다.
-        ```bash
+    ```bash
 	$ mount -t ceph ${CEPHFS_PATH} ${TEMP_DIR} -o ${MOUNT_OPTION}
-	```
+    ```
     * 임의 directory에 권한을 부여한다. 
-        ```bash
+    ```bash
 	    $ chmod 777 ${TEMP_DIR}
-        ```
+    ```
 ## Install Steps
 0. [패키지 설치](https://github.com/tmax-cloud/ovirt-install-guide/tree/master/K8S_Master#step0-%ED%99%98%EA%B2%BD-%EC%84%A4%EC%A0%95)
 1. [oVirt engine 설치](https://github.com/tmax-cloud/ovirt-install-guide/tree/master/K8S_Master#step-1-cri-o-%EC%84%A4%EC%B9%98)
