@@ -97,72 +97,72 @@
 * 순서 :
     * local storage에 vm을 기동하여 engine을 설치한다. 
     
-        ```bash	
-	Are you sure you want to continue? (Yes, No)[Yes]:`Enter`
+        ```yaml	
+		Are you sure you want to continue? (Yes, No)[Yes]:`Enter`
 
-  	Please indicate the gateway IP address [172.21.7.1]:`Enter`
+  		Please indicate the gateway IP address [172.21.7.1]:`Enter`
 
- 	Please indicate a nic to set ovirtmgmt bridge on: (eno1) [eno1]:`Enter`
+ 		Please indicate a nic to set ovirtmgmt bridge on: (eno1) [eno1]:`Enter`
 
-	Please specify which way the network connectivity should be checked (ping, dns, tcp, none) [dns]:`Enter`
+		Please specify which way the network connectivity should be checked (ping, dns, tcp, none) [dns]:`Enter`
 
-	Please enter the name of the datacenter where you want to deploy this hosted-engine host. [Default]:`Enter`
+		Please enter the name of the datacenter where you want to deploy this hosted-engine host. [Default]:`Enter`
+	
+		Please enter the name of the cluster where you want to deploy this hosted-engine host. [Default]:`Enter`
 
-	Please enter the name of the cluster where you want to deploy this hosted-engine host. [Default]:`Enter`
+		If you want to deploy with a custom engine appliance image,
+		please specify the path to the OVA archive you would like to use
+		(leave it empty to skip, the setup will use ovirt-engine-appliance rpm installing it if missing):
+		Please specify the number of virtual CPUs for the VM (Defaults to appliance OVF value): [4]: `${ENGINE_NODE_CPU_SIZE}`
 
-	If you want to deploy with a custom engine appliance image,
-	please specify the path to the OVA archive you would like to use
-	(leave it empty to skip, the setup will use ovirt-engine-appliance rpm installing it if missing):
-	Please specify the number of virtual CPUs for the VM (Defaults to appliance OVF value): [4]: `${ENGINE_NODE_CPU_SIZE}`
+		Please specify the memory size of the VM in MB (Defaults to appliance OVF value): [16384]: `${ENGINE_NODE_MEMORY_SIZE}`
+	
+		Detecting host timezone.
+		Please provide the FQDN you would like to use for the engine.
+		Note: This will be the FQDN of the engine VM you are now going to launch,
+		it should not point to the base host or to any other existing machine.
+		Engine VM FQDN:  []: `${ENGINE_NODE_DNS}`
+	
+		Please provide the domain name you would like to use for the engine appliance.
+		Engine VM domain: [test.dom] `Enter`
+	
+		Enter root password that will be used for the engine appliance: `${ENGINE_NODE_ROOT_PASSWD}`
+		
+		Confirm appliance root password:  `${ENGINE_NODE_ROOT_PASSWD_CONFIRM}`
+	
+		Enter ssh public key for the root user that will be used for the engine appliance (leave it empty to skip): `Enter`
+		
+		Skipping appliance root ssh public key
+		Do you want to enable ssh access for the root user (yes, no, without-password) [yes]: `Enter`
 
-	Please specify the memory size of the VM in MB (Defaults to appliance OVF value): [16384]: `${ENGINE_NODE_MEMORY_SIZE}`
+		Do you want to apply a default OpenSCAP security profile (Yes, No) [No]: `Enter`
+	
+		You may specify a unicast MAC address for the VM or accept a randomly generated default [00:16:3e:20:25:8f]: `Enter`
+	
+		How should the engine VM network be configured (DHCP, Static)[DHCP]? `static`
+	
+		Please enter the IP address to be used for the engine VM []: `${ENGINE_HOST_STATIC_IP}` <-- ex)10.0.0.5
+	
+		Engine VM DNS (leave it empty to skip) [8.8.8.8]: `Enter`
+	
+		Add lines for the appliance itself and for this host to /etc/hosts on the engine VM?
+		Note: ensuring that this host could resolve the engine VM hostname is still up to you
+		(Yes, No)[No]  `yes`
 
-	Detecting host timezone.
-	Please provide the FQDN you would like to use for the engine.
-	Note: This will be the FQDN of the engine VM you are now going to launch,
-	it should not point to the base host or to any other existing machine.
-	Engine VM FQDN:  []: `${ENGINE_NODE_DNS}`
+		Please provide the name of the SMTP server through which we will send notifications [localhost]: `Enter`
 
-	Please provide the domain name you would like to use for the engine appliance.
-	Engine VM domain: [test.dom] `Enter`
+		Please provide the TCP port number of the SMTP server [25]:`Enter`
 
-	Enter root password that will be used for the engine appliance: `${ENGINE_NODE_ROOT_PASSWD}`
+		Please provide the email address from which notifications will be sent [root@localhost]: `Enter`
 
-	Confirm appliance root password:  `${ENGINE_NODE_ROOT_PASSWD_CONFIRM}`
+		Please provide a comma-separated list of email addresses which will get notifications [root@localhost]: `Enter`
 
-	Enter ssh public key for the root user that will be used for the engine appliance (leave it empty to skip): `Enter`
+		Enter engine admin password: `${ENGINE_ADMIN_PAGE_PASSWD}`
+		Confirm engine admin password: `${ENGINE_ADMIN_PAGE_PASSWD_CONFIRM}`
 
-	Skipping appliance root ssh public key
-	Do you want to enable ssh access for the root user (yes, no, without-password) [yes]: `Enter`
-
-	Do you want to apply a default OpenSCAP security profile (Yes, No) [No]: `Enter`
-
-	You may specify a unicast MAC address for the VM or accept a randomly generated default [00:16:3e:20:25:8f]: `Enter`
-
-	How should the engine VM network be configured (DHCP, Static)[DHCP]? `static`
-
-	Please enter the IP address to be used for the engine VM []: `${ENGINE_HOST_STATIC_IP}` <-- ex)10.0.0.5
-
-	Engine VM DNS (leave it empty to skip) [8.8.8.8]: `Enter`
-
-	Add lines for the appliance itself and for this host to /etc/hosts on the engine VM?
-	Note: ensuring that this host could resolve the engine VM hostname is still up to you
-	(Yes, No)[No]  `yes`
-
-	Please provide the name of the SMTP server through which we will send notifications [localhost]: `Enter`
-
-	Please provide the TCP port number of the SMTP server [25]:`Enter`
-
-	Please provide the email address from which notifications will be sent [root@localhost]: `Enter`
-
-	Please provide a comma-separated list of email addresses which will get notifications [root@localhost]: `Enter`
-
-	Enter engine admin password: `${ENGINE_ADMIN_PAGE_PASSWD}`
-	Confirm engine admin password: `${ENGINE_ADMIN_PAGE_PASSWD_CONFIRM}`
-
-	Stage: Setup validation
-	Please provide the hostname of this host on the management network [ovirt1.test.dom]: `Enter`
-	```
+		Stage: Setup validation
+		Please provide the hostname of this host on the management network [ovirt1.test.dom]: `Enter`
+        ```
     * shared storage에 연결정보를 설정 및 연결 한다.
 	```bash
 	Please provide the hostname of this host on the management network [ovirt1.test.dom]: `Enter`
