@@ -98,7 +98,7 @@
 * 순서 :
     * local storage에 vm을 기동하여 engine을 설치한다. 
     
-        ```yaml	
+        ```markdown	
 		Are you sure you want to continue? (Yes, No)[Yes]:`Enter`
 
   		Please indicate the gateway IP address [172.21.7.1]:`Enter`
@@ -166,7 +166,7 @@
         ```
     
     * shared storage에 연결정보를 설정 및 연결 한다.    
-	```yaml
+	```markdown
 		Please provide the hostname of this host on the management network [ovirt1.test.dom]: `Enter`
 		
         	Please specify the storage you would like to use (glusterfs, iscsi, fc, nfs, posixfs)[nfs]: `posixfs`
@@ -179,7 +179,7 @@
 	```
 	
     *  공유할 volume을 구성하고 설치완료된 local storage의 데이터를 이동시킨다.	
-        ```yaml
+        ```markdown
 		Please specify the size of the VM disk in GiB: [101]: 120 `${SHARED_DISK_SIZE_FOR_VM}`
 	```
 * 확인 
