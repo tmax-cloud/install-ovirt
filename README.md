@@ -4,7 +4,7 @@
 
 ## 구성 요소 및 버전
 * Prolinux 8
-* oVirt 4.4
+* oVirt 4.4.3
 * ceph-common.x86_64 2:15.2.5-1.el8
 
 ## 환경구성
@@ -98,7 +98,7 @@
 * 순서 :
     * local storage에 vm을 기동하여 engine을 설치한다. 
     
-        ```markdown	
+        ```markdown
 		Are you sure you want to continue? (Yes, No)[Yes]:`Enter`
 
   		Please indicate the gateway IP address [172.21.7.1]:`Enter`
@@ -175,10 +175,10 @@
 		
         	Please specify the full shared storage connection path to use (example: host:/path): `${CEPH_MOUNT_PATH}`    <-- ex)172.21.3.8:6789:/volumes/_nogroup/tim3/17a08a7a-1f51-43b0-b399-2bca4bffe5ac
 		
-          	If needed, specify additional mount options for the connection to the hosted-engine storagedomain (example: rsize=32768,wsize=32768) []:  `${CEPH_MOUNT_OPTION}` <-- ex) name=admin,secret=AQCeBcZftAEvExAAultsKBpNpiWWGi06Md7mmw==		
+          	If needed, specify additional mount options for the connection to the hosted-engine storagedomain (example: rsize=32768,wsize=32768) []:  `${CEPH_MOUNT_OPTION}` <-- ex) name=admin,secret=AQCeBcZftAEvExAAultsKBpNpiWWGi06Md7mmw==
 	```
 	
-    *  공유할 volume을 구성하고 설치완료된 local storage의 데이터를 이동시킨다.	
+    *  공유할 volume을 구성하고 설치완료된 local storage의 데이터를 이동시킨다.
         ```markdown
 		Please specify the size of the VM disk in GiB: [101]: 120 `${SHARED_DISK_SIZE_FOR_VM}`
 	```
@@ -205,10 +205,14 @@
 	| [   Shared Storage  ] | 10.0.0.6 | 10.0.0.2 |  [   oVirt Node     ] |
 	|     ceph.test.dom     +----------+----------+    ovirt2.test.dom    |
 	|                       |                     |                       |
-	+-----------------------+                     +-----------------------+	
+	+-----------------------+                     +-----------------------+
 
     ```
 * 순서: 
+    * libvirtd및 cockpit.socket 활성화   
+        ```bash
+	    $ systemctl enable --now libvirtd cockpit.socket
+	```
     * Access to oVirt Admin Portal, and Click [Compute] - [Hosts] on the left pane.
         *  https://${ENGINE_NODE_DNS}/ovirt-engine 
         *  login
@@ -217,7 +221,7 @@
     * Click [New] button on the top of right pane.
     * Input information of Node you'd like to add. Required items are Name/HostName of target Node and authentication method
         * /etc/hosts 기준 DNS를 HostName/IP로 설정 
-        ```markdown        		
+        ```markdown
             * HostName/IP: ${NODE_DNS}
             * ex) ovirt2.test.com
         ```
@@ -226,7 +230,6 @@
     * After successfully finishing configuration tasks, [Status] turns to [Up], That's OK to add a new Compute Node.
 
 * 확인:
-    * Admin Node 혹은 추가된 node에서 hosted-engine --vm-status를 통해 추가된 node에 vm이 down된 형태로 추가되었는지 확인 
-    *  
+    * Admin Node 혹은 추가된 node에서 hosted-engine --vm-status를 통해 추가된 node에 vm이 down된 형태로 추가되었는지 확인
 	
     
