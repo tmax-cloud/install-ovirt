@@ -54,10 +54,10 @@
     ```
     * 예제
     ```bash
-    172.21.7.9 ovirt1.test.dom ovirt1    # admin node
-    172.21.7.10 ovirt2.test.dom ovirt2   # another node
-    172.21.7.11 ovirt3.test.dom ovirt3   # another node
-    172.21.7.17 master.test.dom master   # engine node on VM
+    10.0.0.1 ovirt1.test.dom ovirt1   # admin node
+    10.0.0.2 ovirt2.test.dom ovirt2   # another node
+    10.0.0.5 master.test.dom master   # engine node on VM
+    10.0.0.6 ceph.test.dom   ceph     # storage node
     ```  
     
 3.  cephfs를 ovirt storage domain으로 사용하기 위한 설정 
@@ -191,4 +191,42 @@
         * url: https://${ENGINE_NODE_DNS}/ovirt-engine
         * ex) https://master.test.dom/ovirt-engine
     
+## Step 2. oVirt ha 구성
+* 목적 : `engine의 ha구성을 위한 node를 추가한다.`
+* 구성 : 
+    ```
+ 	+-----------------------+                     +-----------------------+
+	|   [   Admin Node   ]  | 10.0.0.1 | 10.0.0.5 | [    oVirt Engine   ] |
+	|    ovirt1.test.dom    +----------+----------+     master.test.dom   |
+	|                       |          |          |                       |
+	+-----------------------+          |          +-----------------------+
+	                                   |
+	+-----------------------+          |          +-----------------------+
+	| [   Shared Storage  ] | 10.0.0.6 | 10.0.0.2 |  [   oVirt Node     ] |
+	|     ceph.test.dom     +----------+----------+    ovirt2.test.dom    |
+	|                       |                     |                       |
+	+-----------------------+                     +-----------------------+	
 
+    ```
+* 순서: 
+    * Access to oVirt Admin Portal, and Click [Compute] - [Hosts] on the left pane.
+        *  https://${ENGINE_NODE_DNS}/ovirt-engine 
+        *  login
+            * id: admin
+            * passwd: `${ENGINE_ADMIN_PAGE_PASSWD}`
+    * Click [New] button on the top of right pane.
+    * Input information of Node you'd like to add. Required items are Name/HostName of target Node and authentication method
+        * /etc/hosts 기준 DNS를 HostName/IP로 설정 
+        ```markdown        		
+            * HostName/IP: ${NODE_DNS}
+            * ex) ovirt2.test.com
+        ```
+    * Configure [Power Management]. Click [OK] to proceed without configuring it
+    * After adding a new Compute Node, required tasks are run, so [Status] turns to [Installing].
+    * After successfully finishing configuration tasks, [Status] turns to [Up], That's OK to add a new Compute Node.
+
+* 확인:
+    * Admin Node 혹은 추가된 node에서 hosted-engine --vm-status를 통해 추가된 node에 vm이 down된 형태로 추가되었는지 확인 
+    *  
+	
+    
