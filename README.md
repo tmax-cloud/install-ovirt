@@ -88,7 +88,7 @@
     * module 설정
 	```bash
 	$ sudo dnf module disable virt
-	$sudo dnf module enable pki-deps postgresql:12 parfait
+	$ sudo dnf module enable pki-deps postgresql:12 parfait
 	```
     * hosted-engine 패키지 설치
 	```bash
