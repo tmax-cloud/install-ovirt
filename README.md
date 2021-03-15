@@ -20,6 +20,10 @@
 |     ceph.tmax.dom     +----------+
 |                       |
 +-----------------------+
+
+* Admin Node: oVirt-engine이 배포 될 최초의 Node
+* oVirt Engine: VM에서 동작하는 oVirt Master application
+* Shared Storage: ceph rados 서버 
 ```
 ## Prerequisites
 
