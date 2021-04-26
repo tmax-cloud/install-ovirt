@@ -47,8 +47,24 @@
         CEPHFS_PATH - 10.0.1.2:6789:/volumes/_nogroup/vol/abcdefgh-1111-2222-3333-abcdefghijkl
         MOUNT_OPTION - name=admin,secret=ABCdEfGftAEvExAAultsKBpNpiWWGi06Md7kks==
         ```
+        
+4. Ceph와 동일한 클러스터에 oVirt가 설치되는 경우, 각 노드에서 ceph이 사용하는 local device들을 multipath blacklist에 추가합니다.
+    * 아래의 명령어를 통해 device에 대한 wwid를 가져옵니다. (ceph이 사용하는 모든 device들에 대해 수행합니다)
+    ```bash
+    $ /lib/udev/scsi_id --whitelisted --device=/dev/sdb
+    35002538d40a75c92
+    ```
+    * /etc/multipath/conf.d/ceph.conf 를 열고 blacklist를 작성합니다.
+    ```bash
+    $ mkdir -p /etc/multipath/conf.d
+    $ vi /etc/multipath/conf.d/ceph.conf
+    blacklist {
+        wwid "35002538d40a75c92"
+        wwid "35000039fe9d4449f"
+    }
+    ```
 
-4. engine VM의 HA를 위해 최소 2대의 물리 노드가 필요합니다.
+5. engine VM의 HA를 위해 최소 2대의 물리 노드가 필요합니다.
 
 ## Install Steps
 0. [패키지 설치](https://github.com/tmax-cloud/ovirt-install-guide/tree/master/K8S_Master#step0-%ED%99%98%EA%B2%BD-%EC%84%A4%EC%A0%95)
