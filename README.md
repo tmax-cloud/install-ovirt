@@ -8,20 +8,17 @@
 ## Prerequisites
 
 1. oVirt 패키지와 ceph 패키지 설치가 가능한 repository를 모든 노드에 추가합니다.
-    * 티맥스 타워의 서버의 경우
-        * /etc/yum.repo.d/Ovirt.repo 생성
+    * Public Network 환경의 경우
+        * /etc/yum.repo.d/ovirt.repo 생성
         ```bash 
         [OvirtRepo]
         name=ovirt-repo
-        baseurl=http://pldev-repo-21.tk/prolinux/ovirt/4.4/el8/x86_64/
+        baseurl=http://prolinux-repo.tmaxos.com/ovirt/4.4/el8/x86_64/
         gpgcheck=0 
-
-        [CephRepo]
-        name=ceph-repo
-        baseurl=http://vault.centos.org/8.2.2004/storage/x86_64/ceph-octopus
-        gpgcheck=0
         ```
-    * Private 환경의 경우 private repository 주소로 수정합니다.
+    * Private Network 환경의 경우
+        * /etc/yum.repos.d/ProLinux.repo 의 baseurl을 ProLinux를 위한 private repository 주소로 수정합니다.
+        * 위의 OvirtRepo의 baseurl을 Ovirt를 위한 private repository 주소로 수정합니다.
     * 아래의 명령어를 통해 repository가 정상적으로 추가되었는지 확인합니다.
     ```bash
     $ yum repolist
@@ -78,8 +75,8 @@
 * 순서:
     * module 설정
     ```bash
-    $ sudo dnf module disable virt
-    $ sudo dnf module enable pki-deps postgresql:12 parfait
+    $ sudo dnf module disable virt -y
+    $ sudo dnf module enable pki-deps postgresql:12 parfait -y
     ```
     * hosted-engine 패키지 설치
     ```bash
@@ -118,6 +115,8 @@
         * OVEHOSTED_VM/vmMACAddr=str:{Engine VM의 mac 주소 (위의 명령어를 통해 얻은 값으로 설정)}
         * OVEHOSTED_VM/vmMemSizeMB=int:{EngineVM의 memory 크기 (최소: 4096, 권장: 16384)}
         * OVEHOSTED_VM/vmVCpus=str:{EngineVM의 vcpu 수 (최소: 2, 권장: 4)}
+        * OVEHOSTED_VM/proLinuxRepoAddress=str:{prolinux repository 주소 (private network인 경우에만 설정)}
+        * OVEHOSTED_VM/ovirtRepoAddress=str:{ovirt repository 주소 (private network인 경우에만 설정)}
     * 아래의 명령어를 통해 deploy를 수행합니다. (20 ~ 30분 소요)
     ```bash
     $ hosted-engine --deploy --config-append=answers.conf
@@ -172,3 +171,6 @@
     ```bash
     $ hosted-engine --vm-status
     ```
+
+## Step 3. oVirt UI custom branding
+* https://github.com/tmax-cloud/hypervm-ovirt-ui-custom-branding 참고
