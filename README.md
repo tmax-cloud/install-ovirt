@@ -86,11 +86,6 @@
     ```bash
     $ yum install -y ceph-common
     ```
-    * script 배포
-    ```bash
-    $ tar -xvf ovirt4.4.3_posixfs_scripts.tar && cd ovirt4.4.3_posixfs_scripts
-    $ ./deploy.sh
-    ```
 
 ## Step 1. oVirt engine 설치
 * 목적: `oVirt domain을 제어할 engine을 vm위에 배포`
@@ -171,6 +166,3 @@
     ```bash
     $ hosted-engine --vm-status
     ```
-
-## Step 3. oVirt UI custom branding
-* https://github.com/tmax-cloud/hypervm-ovirt-ui-custom-branding 참고
