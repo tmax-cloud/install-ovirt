@@ -166,3 +166,5 @@
     ```bash
     $ hosted-engine --vm-status
     ```
+## MBS 설치 가이드 
+   * https://github.com/tmax-cloud/hypersds-wiki/tree/main/ovirt_mbs 참조.
