@@ -182,7 +182,7 @@
     ```bash
     $ hosted-engine --vm-status
     ```
- * 만일 ceph와 동일 클러스터상의 노드를 oVirt노드로 추가하는 엔진 설치 마지막에 lvm 수정 작업과 동일한 작업을 추가하려는 노드에도 수행합니다. 
+ * 만일 ceph와 동일 클러스터상의 노드를 oVirt노드로 추가하는 경우, 엔진 설치 마지막에 lvm 수정 작업과 동일한 작업을 추가하려는 노드에도 수행합니다. 
    * lvm.conf 파일 내용 수정
    ```
    vi /etc/lvm/lvm.conf
