@@ -152,7 +152,18 @@
     ```
     * configuration
         * answers_example.conf를 참조하세요.
+* Ceph와 동일 클러스터에 oVirt가 추가되는 경우, lvm 필터 제거 작업을 추가로 실시합니다.
+  * lvm.conf 파일 내용 수정
+   ```
+   vi /etc/lvm/lvm.conf
 
+   filter 검색
+   # filter = ["a|^/dev/disk/by-id/lvm-pv-uuid-zQgFIQ-oHef-Hyk9-oZwq-RF7r-P0WP-mRSE0A$|", "r|.*|"]
+   위와 같은 내용을 찾아서 주석처리.  
+
+   reboot # 호스트 재부팅 실시.
+   ```
+   
 ## Step 2. oVirt node 추가
 * 목적: `oVirt cluster에 새로운 node를 추가`
 * 순서: 
@@ -171,7 +182,7 @@
     ```bash
     $ hosted-engine --vm-status
     ```
- * 만일 ceph와 동일 클러스터상의 노드를 oVirt노드로 추가하는 경우 다음 작업을 추가로 실시합니다.
+ * 만일 ceph와 동일 클러스터상의 노드를 oVirt노드로 추가하는 엔진 설치 마지막에 lvm 수정 작업과 동일한 작업을 추가하려는 노드에도 수행합니다. 
    * lvm.conf 파일 내용 수정
    ```
    vi /etc/lvm/lvm.conf
