@@ -36,6 +36,11 @@
     
 3. cephfs를 engine VM의 ovirt storage domain으로 사용하기 위해 cephfs volume을 준비합니다.
     * 구성된 ceph cluster로부터 uid와 gid가 36이고 크기가 300GB인 cephfs volume을 생성합니다.
+         ```
+         $ ceph fs subvolume create {{ fs name }} {{ subvolume name }} --size 322122547200 --uid 36 --gid 36
+         $ ceph fs subvolume getpath {{ fs name }} {{ subvolume name }} => CEPHFS_PATH로 사용
+         $ cat /etc/ceph/ceph.client.admin.keyring => MOUNT_OPTION의 secret으로 사용
+         ```
     * 생성된 volume에 대한 path와 접근하기 위한 user name, user secret 정보를 가져옵니다.
         * CEPHFS_PATH = mount하고자 하는 cephfs에 대한 경로
         * MOUNT_OPTION = 연결하고자 하는 ceph의 secret 정보
@@ -166,5 +171,16 @@
     ```bash
     $ hosted-engine --vm-status
     ```
+ * 만일 ceph와 동일 클러스터상의 노드를 oVirt노드로 추가하는 경우 다음 작업을 추가로 실시합니다.
+   * lvm.conf 파일 내용 수정
+   ```
+   vi /etc/lvm/lvm.conf
+
+   filter 검색
+   # filter = ["a|^/dev/disk/by-id/lvm-pv-uuid-zQgFIQ-oHef-Hyk9-oZwq-RF7r-P0WP-mRSE0A$|", "r|.*|"]
+   위와 같은 내용을 찾아서 주석처리.  
+
+   reboot # 호스트 재부팅 실시.
+   ```
 ## MBS 설치 가이드 
    * https://github.com/tmax-cloud/hypersds-wiki/tree/main/ovirt_mbs 참조.
