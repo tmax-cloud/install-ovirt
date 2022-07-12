@@ -171,6 +171,10 @@
         $ multipath -f /dev/mapper/WDC_WD10SPZX-00Z10T0_WD-WXN1E18ED7P9 
     3. lsblk 명령으로 멀티패스 제거됨을 확인
     4. /etc/multipath/conf.d/vdsm_blacklist.conf 에 mpath 잡히던 device 추가
+       blacklist {
+         wwid "..."
+         wwid "WDC_WD10SPZX-00Z10T0_WD-WXN1E18ED7P9"
+         }
    ```
    
 ## Step 2. oVirt node 추가
@@ -210,6 +214,10 @@
         $ multipath -f /dev/mapper/WDC_WD10SPZX-00Z10T0_WD-WXN1E18ED7P9 
     3. lsblk 명령으로 멀티패스 제거됨을 확인
     4. /etc/multipath/conf.d/vdsm_blacklist.conf 에 mpath 잡히던 device 추가
+      blacklist {
+      wwid "..."
+      wwid "WDC_WD10SPZX-00Z10T0_WD-WXN1E18ED7P9"
+      }
    ```
 ## MBS 설치 가이드 
    * https://github.com/tmax-cloud/hypersds-wiki/tree/main/ovirt_mbs 참조.
