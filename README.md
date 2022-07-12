@@ -163,6 +163,15 @@
 
    reboot # 호스트 재부팅 실시.
    ```
+  * mpath 제거
+   ```
+    1. lsblk 로 장치 확인
+    2. 멀티패스 장치 제거
+        $ multipath -w /dev/mapper/WDC_WD10SPZX-00Z10T0_WD-WXN1E18ED7P9
+        $ multipath -f /dev/mapper/WDC_WD10SPZX-00Z10T0_WD-WXN1E18ED7P9 
+    3. lsblk 명령으로 멀티패스 제거됨을 확인
+    4. /etc/multipath/conf.d/vdsm_blacklist.conf 에 mpath 잡히던 device 추가
+   ```
    
 ## Step 2. oVirt node 추가
 * 목적: `oVirt cluster에 새로운 node를 추가`
@@ -192,6 +201,15 @@
    위와 같은 내용을 찾아서 주석처리.  
 
    reboot # 호스트 재부팅 실시.
+   ```
+   * mpath 제거
+   ```
+    1. lsblk 로 장치 확인
+    2. 멀티패스 장치 제거
+        $ multipath -w /dev/mapper/WDC_WD10SPZX-00Z10T0_WD-WXN1E18ED7P9
+        $ multipath -f /dev/mapper/WDC_WD10SPZX-00Z10T0_WD-WXN1E18ED7P9 
+    3. lsblk 명령으로 멀티패스 제거됨을 확인
+    4. /etc/multipath/conf.d/vdsm_blacklist.conf 에 mpath 잡히던 device 추가
    ```
 ## MBS 설치 가이드 
    * https://github.com/tmax-cloud/hypersds-wiki/tree/main/ovirt_mbs 참조.
